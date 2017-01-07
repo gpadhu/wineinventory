@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { StoreDetailComponent } from './components/store/store-detail/store-detail.component';
 import { WineDetailComponent  } from './components/wine/wine-detail/wine-detail.component';
 export const appRoutes: Routes = [
-    { path: '', component: StoreComponent, pathMatch: 'full' },
+    { path: '', redirectTo: 'store', pathMatch: 'full' },
     { path: 'store', component: StoreComponent, pathMatch: 'full'  },
     { path: 'store/:id', component: StoreDetailComponent },
     { path: 'wine', component: WineComponent, pathMatch: 'full' },

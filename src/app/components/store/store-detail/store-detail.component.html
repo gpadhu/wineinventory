@@ -1,3 +1,8 @@
-<p>
-  store-detail works!
-</p>
+<md-card>
+  <md-toolbar color= "primary">{{'#'+store.id + ', ' + store.city + ' - Account: ' + store.account}}</md-toolbar>
+  <md-grid-list cols="4" rowHeight="40">
+    <md-grid-tile *ngFor="let wine of wines">
+      <a [routerLink]="[wine.id]" md-button color="primary">{{'#'+wine.id + ' ' + wine.name }}</a>
+    </md-grid-tile>
+  </md-grid-list>
+</md-card>
