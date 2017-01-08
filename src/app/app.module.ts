@@ -23,7 +23,6 @@ import { firebaseConfig } from './app.firebase';
     WineComponent,
     LoginComponent,
     StoreDetailComponent,
-    WineDetailComponent,
     WineDetailComponent
   ],
   imports: [

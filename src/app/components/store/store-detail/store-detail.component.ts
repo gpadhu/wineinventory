@@ -13,7 +13,9 @@ export class StoreDetailComponent implements OnInit {
   public store: FirebaseObjectObservable<any>;
   public stocks: FirebaseListObservable<any>;
   public days: any;
-
+  public wines: any;
+  public table_data: any;
+  public table_columns: any = ['Wines', '% Sold Through', 'Units at Store Now'];
   constructor(private aRoute: ActivatedRoute, public af: AngularFire) {}
 
   ngOnInit() {
@@ -27,12 +29,29 @@ export class StoreDetailComponent implements OnInit {
           limitToFirst: 10
         }
     });
-      console.log(this.id);
     });
 
-    this.stocks.subscribe(sn => {
-      console.log(sn);
+    this.stocks.subscribe(newstocks => {
+      this.days = newstocks.filter((stock, index, self) => self.findIndex((t) => {return t.date === stock.date; }) === index);
+      this.days = this.days.map((day) => day.date);
+
+      this.wines = newstocks.filter((stock, index, self) => self.findIndex((t) => {return t.wine === stock.wine; }) === index);
+      this.wines = this.wines.map((wine) => wine.wine);
+      this.prepareTableData();
+  });
+
+  }
+
+  prepareTableData() {
+    this.table_data = [];
+    this.table_columns = this.table_columns.concat(this.days);
+    console.log(this.table_columns);
+
+    this.wines.forEach((wine, index) => {
+      this.table_data.push([wine, 'sold through %', 'units at store now', '']);
     });
+
+    console.log(this.table_data);
   }
 
 }
