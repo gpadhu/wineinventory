@@ -13,8 +13,8 @@
 <md-card>
   <md-toolbar color= "primary">Stores</md-toolbar>
   <md-grid-list cols="4" rowHeight="40">
-    <md-grid-tile *ngFor="let store of stores">
-      <a [routerLink]="[store.id]" md-button color="primary">{{'#'+store.id + ', ' + store.city + ' - Account: ' + store.account}}</a>
+    <md-grid-tile *ngFor="let store of stores | async">
+      <a [routerLink]="[store.$key]" md-button color="primary">{{'#'+store.$key + ', ' + store.city + ' - Account: ' + store.account}}</a>
     </md-grid-tile>
   </md-grid-list>
 </md-card>

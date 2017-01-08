@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Component({
   selector: 'app-store',
@@ -7,13 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoreComponent implements OnInit {
   public store: any = { city: 'PITTSBURG', account: 3, wines: [{ name: 'Artesana Tannat 2013', stocks: 17}]};
-  public stores: any = [ {id: '0207', city: 'PITTSBURG', account: 3},
-                         {id: '0208', city: 'PITTSBURG', account: 3},
-                         {id: '0209', city: 'PITTSBURG', account: 3},
-                         {id: '0201', city: 'PITTSBURG', account: 3},
-                         {id: '0201', city: 'PITTSBURG', account: 3}
-                       ];
-  constructor() { }
+  public stores: FirebaseListObservable<any>;
+
+  constructor(af: AngularFire) {
+    this.stores = af.database.list('/stores');
+   }
 
   ngOnInit() {
   }

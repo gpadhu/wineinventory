@@ -1,8 +1,8 @@
 <md-card>
-  <md-toolbar color= "primary">{{'#'+store.id + ', ' + store.city + ' - Account: ' + store.account}}</md-toolbar>
-  <md-grid-list cols="4" rowHeight="40">
-    <md-grid-tile *ngFor="let wine of wines">
-      <a [routerLink]="[wine.id]" md-button color="primary">{{'#'+wine.id + ' ' + wine.name }}</a>
+  <md-toolbar color= "primary">{{'#'+ (store | async)?.$key + ', ' + (store | async)?.city + ' - Account: ' + (store | async)?.account}}</md-toolbar>
+  <md-grid-list cols="1" rowHeight="40">
+    <md-grid-tile *ngFor="let stock of stocks  | async">
+      {{stock.name}} | {{stock.store}} | {{ stock.wine }} | {{stock.stock}} | {{stock.date}}
     </md-grid-tile>
   </md-grid-list>
 </md-card>
