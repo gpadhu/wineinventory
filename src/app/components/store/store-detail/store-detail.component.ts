@@ -12,6 +12,7 @@ export class StoreDetailComponent implements OnInit {
   private sub: any;
   public store: FirebaseObjectObservable<any>;
   public stocks: FirebaseListObservable<any>;
+  public tempstocks: any;
   public days: any;
   public wines: any;
   public table_data: any;
@@ -34,24 +35,41 @@ export class StoreDetailComponent implements OnInit {
     this.stocks.subscribe(newstocks => {
       this.days = newstocks.filter((stock, index, self) => self.findIndex((t) => {return t.date === stock.date; }) === index);
       this.days = this.days.map((day) => day.date);
-
+      this.days = this.days.reverse();
       this.wines = newstocks.filter((stock, index, self) => self.findIndex((t) => {return t.wine === stock.wine; }) === index);
       this.wines = this.wines.map((wine) => wine.wine);
+      this.tempstocks = newstocks;
       this.prepareTableData();
   });
 
   }
 
   prepareTableData() {
+    let oldestDate = this.days.reduce((a, b) => {return Math.min(a, b)});
+    let latestDate = this.days.reduce((a, b) => {return Math.max(a, b)});
     this.table_data = [];
     this.table_columns = this.table_columns.concat(this.days);
-    console.log(this.table_columns);
-
     this.wines.forEach((wine, index) => {
-      this.table_data.push([wine, 'sold through %', 'units at store now', '']);
+      let row = [];
+      row.push(wine);
+      let initialStock = this.getStock(wine, oldestDate);
+      let latestStock = this.getStock(wine, latestDate);
+      let soldPercentange = ((latestStock - initialStock) / initialStock * 100);
+      row.push(soldPercentange + '%');
+      row.push(this.getStock(wine, latestDate));
+      this.table_columns.forEach((column, cIndex) => {
+        if (cIndex >= 3) {
+          row.push(this.getStock(wine, column));
+        }
+      });
+      this.table_data.push(row);
     });
+    console.log(this.tempstocks);
+  }
 
-    console.log(this.table_data);
+  getStock(wine, date) {
+    let tempstock = this.tempstocks.filter((stock, index) => { return stock.wine === wine && stock.date === date });
+    return tempstock[0].stock;
   }
 
 }
