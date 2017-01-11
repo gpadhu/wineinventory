@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { API } from './config';
 
 @Injectable()
 export class FirebaseDataService {
   public stores: FirebaseListObservable<any>;
   public wines: FirebaseListObservable<any>;
   public wineStores: any;
-
-  constructor(private af: AngularFire) {
+  constructor(private af: AngularFire, private http: Http) {
     this.stores = this.af.database.list('/stores');
     this.wines = this.af.database.list('/wines');
    }
@@ -44,6 +45,10 @@ export class FirebaseDataService {
             equalTo: id
           }
       });
-  }
+ }
 
+ updateStocks(id: string) {
+   console.log(API.baseUrls);
+   console.log(API.queryParams);
+ }
 }
