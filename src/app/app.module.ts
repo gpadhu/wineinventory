@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { appRoutes } from './app.routes';
 import { AppComponent } from './app.component';
@@ -14,8 +14,14 @@ import { WineComponent } from './components/wine/wine.component';
 import { LoginComponent } from './components/login/login.component';
 import { StoreDetailComponent } from './components/store/store-detail/store-detail.component';
 import { WineDetailComponent } from './components/wine/wine-detail/wine-detail.component';
-import { firebaseConfig } from './app.firebase';
-
+import { firebaseConfig, firebaseAuthConfig } from './app.firebase';
+import { AuthServiceGuard } from './auth-service.guard';
+import { HeaderComponent } from './components/header/header.component';
+import { FirebaseDataService } from './services/firebase-data.service';
+import { SearchPipe } from './pipes/search.pipe';
+import { WineSearchPipe } from './pipes/wine-search.pipe';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NotificationService } from './services/notification.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,17 +29,21 @@ import { firebaseConfig } from './app.firebase';
     WineComponent,
     LoginComponent,
     StoreDetailComponent,
-    WineDetailComponent
+    WineDetailComponent,
+    HeaderComponent,
+    SearchPipe,
+    WineSearchPipe
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     MaterialModule.forRoot(),
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    SimpleNotificationsModule
   ],
-  providers: [],
+  providers: [ AuthServiceGuard, FirebaseDataService, NotificationService  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

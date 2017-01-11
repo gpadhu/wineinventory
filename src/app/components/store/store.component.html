@@ -5,16 +5,18 @@
   <md-grid-tile>
 
   <md-input-container>
-    <input md-input placeholder="Store No#">
+    <input md-input #search type="search" placeholder="Store No#">
   </md-input-container>
   </md-grid-tile>
   </md-grid-list>
 </md-card>
 <md-card>
-  <md-toolbar color= "primary">Stores</md-toolbar>
+  <md-toolbar color= "primary" (click)="sendNotification()">Stores 
+    <span *ngIf="stores | async">&nbsp;&mdash;&nbsp;There are {{ (stores | async)?.length}} stores.</span>
+  </md-toolbar>
   <md-grid-list cols="4" rowHeight="40">
-    <md-grid-tile *ngFor="let store of stores | async">
-      <a [routerLink]="[store.$key]" md-button color="primary">{{'#'+store.$key + ', ' + store.city + ' - Account: ' + store.account}}</a>
+    <md-grid-tile *ngFor="let store of stores | async | searchStore:search.value">
+      <a [routerLink]="[store.$key]" md-button color="primary">{{'#'+store?.$key}} ,&nbsp; {{store?.city}}</a>
     </md-grid-tile>
   </md-grid-list>
 </md-card>

@@ -1,3 +1,19 @@
-<p>
-  login works!
-</p>
+<div id="hidelink">
+  <p [hidden]="showError">Incorrect Email/Password combination</p>
+</div>
+<md-card>
+  <md-card id="login-form" color="primary">
+      <md-card-title class="login" color="primary">
+        LOGIN
+      </md-card-title>
+    <md-input-container>
+      <input md-input #email type="text" placeholder="Email">
+    </md-input-container>
+    <br>
+    <md-input-container>
+      <input md-input #pass type="password" placeholder="Password">
+    </md-input-container>
+    <br>
+    <button md-raised-button color="primary" (click)="login(email.value, pass.value)">LETS GO!</button>
+  </md-card>
+</md-card>

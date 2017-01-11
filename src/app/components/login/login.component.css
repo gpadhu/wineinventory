@@ -1,0 +1,30 @@
+button, input, md-input-container {
+    width: 100%;
+}
+
+md-input-container {
+    margin-bottom: 20px;
+}
+
+#login-form {
+    width: 300px;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.login , p{
+    color: #673ab7;
+    text-align: center;
+    border-top: 3px 1px -2px rgba(0,0,0,.2);
+}
+div {
+    width: 1200px;
+    display: block;
+    position: relative;
+    background: white;
+    height: 100px;
+    margin: auto;
+    margin-top: -100px;
+    z-index: 50 !important;
+    text-align: cemter;
+}

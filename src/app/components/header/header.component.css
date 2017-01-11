@@ -1,0 +1,10 @@
+#logoutBtn {
+    float: right;
+    display: block;
+    z-index: 100;
+    margin: 20px;
+}
+
+#header {
+    cursor: pointer;
+} 

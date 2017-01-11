@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
-
+import { FirebaseDataService } from '../../../services/firebase-data.service';
 @Component({
   selector: 'app-store-detail',
   templateUrl: './store-detail.component.html',
@@ -17,21 +17,19 @@ export class StoreDetailComponent implements OnInit {
   public wines: any;
   public table_data: any;
   public table_columns: any = ['Wines', '% Sold Through', 'Units at Store Now'];
-  constructor(private aRoute: ActivatedRoute, public af: AngularFire) {}
+  constructor(private aRoute: ActivatedRoute, public af: AngularFire, public ds: FirebaseDataService) {}
 
   ngOnInit() {
     this.sub = this.aRoute.params.subscribe(params => {
       this.id = +params['id'];
-      this.store = this.af.database.object('/stores/' + this.id);
-      this.stocks = this.af.database.list('/stocks', {
-        query: {
-          orderByChild: 'store',
-          equalTo: this.id,
-          limitToFirst: 10
-        }
+      this.store = this.ds.getStore(params['id']);
+      this.stocks = this.ds.getStocks(this.id);
+      this.getStockDetails();
+      this.store.subscribe(da => console.log(da));
     });
-    });
+  }
 
+  getStockDetails() {
     this.stocks.subscribe(newstocks => {
       this.days = newstocks.filter((stock, index, self) => self.findIndex((t) => {return t.date === stock.date; }) === index);
       this.days = this.days.map((day) => day.date);
@@ -40,8 +38,7 @@ export class StoreDetailComponent implements OnInit {
       this.wines = this.wines.map((wine) => wine.wine);
       this.tempstocks = newstocks;
       this.prepareTableData();
-  });
-
+    });
   }
 
   prepareTableData() {
@@ -64,7 +61,6 @@ export class StoreDetailComponent implements OnInit {
       });
       this.table_data.push(row);
     });
-    console.log(this.tempstocks);
   }
 
   getStock(wine, date) {
