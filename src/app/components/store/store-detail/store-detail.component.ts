@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import { FirebaseDataService } from '../../../services/firebase-data.service';
+import { LoadingBarService } from 'ng2-loading-bar';
+
 @Component({
   selector: 'app-store-detail',
   templateUrl: './store-detail.component.html',
@@ -17,7 +19,10 @@ export class StoreDetailComponent implements OnInit {
   public wines: any;
   public table_data: any;
   public table_columns: any = ['Wines', '% Sold Through', 'Units at Store Now'];
-  constructor(private aRoute: ActivatedRoute, public af: AngularFire, public ds: FirebaseDataService) {}
+  constructor(private aRoute: ActivatedRoute,
+              public af: AngularFire,
+              public ds: FirebaseDataService,
+              public loadingbar: LoadingBarService) {}
 
   ngOnInit() {
     this.sub = this.aRoute.params.subscribe(params => {
@@ -25,7 +30,7 @@ export class StoreDetailComponent implements OnInit {
       this.store = this.ds.getStore(params['id']);
       this.stocks = this.ds.getStocks(this.id);
       this.getStockDetails();
-      this.store.subscribe(da => console.log(da));
+      this.loadingbar.start();
     });
   }
 
@@ -38,6 +43,9 @@ export class StoreDetailComponent implements OnInit {
       this.wines = this.wines.map((wine) => wine.wine);
       this.tempstocks = newstocks;
       this.prepareTableData();
+      if (newstocks == null ) {
+        this.loadingbar.stop();
+      } else { this.loadingbar.complete() }
     });
   }
 

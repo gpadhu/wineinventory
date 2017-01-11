@@ -4,7 +4,7 @@
           <table class="table-fill">
         <thead>
           <tr>
-            <th class="text-left" *ngFor="let col of table_columns">{{col}}</th>
+            <th class="text-left" *ngFor="let col of table_columns">{{col |toDate}}</th>
           </tr>
         </thead>
         <tbody class="table-hover">

@@ -22,6 +22,9 @@ import { SearchPipe } from './pipes/search.pipe';
 import { WineSearchPipe } from './pipes/wine-search.pipe';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NotificationService } from './services/notification.service';
+import {LoadingBarModule } from 'ng2-loading-bar';
+import { ToDatePipe } from './pipes/to-date.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,8 @@ import { NotificationService } from './services/notification.service';
     WineDetailComponent,
     HeaderComponent,
     SearchPipe,
-    WineSearchPipe
+    WineSearchPipe,
+    ToDatePipe
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -41,9 +45,10 @@ import { NotificationService } from './services/notification.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    SimpleNotificationsModule
+    SimpleNotificationsModule,
+    LoadingBarModule
   ],
-  providers: [ AuthServiceGuard, FirebaseDataService, NotificationService  ],
+  providers: [ AuthServiceGuard, FirebaseDataService, NotificationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

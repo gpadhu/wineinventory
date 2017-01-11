@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
+import { LoadingBarModule } from 'ng2-loading-bar';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,9 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class HeaderComponent {
   public primary: boolean = true;
-  constructor(public af: AngularFire, public router: Router, public notification: NotificationService){}
+  constructor(public af: AngularFire,
+              public router: Router,
+              public notification: NotificationService){}
 
   logout() {
     this.af.auth.logout();
