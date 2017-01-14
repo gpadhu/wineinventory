@@ -9,7 +9,6 @@ import { LoadingBarService } from 'ng2-loading-bar';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  private showError: boolean = true;
   constructor(public af: AngularFire,
               public router: Router,
               public notification: NotificationService,
@@ -23,8 +22,8 @@ export class LoginComponent {
       this.notification.sendNotification('Logged in!', 'Successfully loggedin. Welcome.');
       this.loadingbar.complete();
     }).catch(() => {
-      this.showError = false;
       this.loadingbar.stop();
+      this.notification.sendNotification('Sorry!', 'Please check in your email and password and try again');
     });
   }
 

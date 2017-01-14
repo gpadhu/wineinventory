@@ -24,6 +24,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NotificationService } from './services/notification.service';
 import {LoadingBarModule } from 'ng2-loading-bar';
 import { ToDatePipe } from './pipes/to-date.pipe';
+import { WineDialogComponent } from './components/wine/wine-dialog/wine-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ToDatePipe } from './pipes/to-date.pipe';
     HeaderComponent,
     SearchPipe,
     WineSearchPipe,
-    ToDatePipe
+    ToDatePipe,
+    WineDialogComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -48,6 +50,7 @@ import { ToDatePipe } from './pipes/to-date.pipe';
     SimpleNotificationsModule,
     LoadingBarModule
   ],
+  entryComponents: [WineDialogComponent],
   providers: [ AuthServiceGuard, FirebaseDataService, NotificationService ],
   bootstrap: [AppComponent]
 })

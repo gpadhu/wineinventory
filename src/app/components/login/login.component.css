@@ -28,3 +28,7 @@ div {
     z-index: 50 !important;
     text-align: cemter;
 }
+
+md-card#login-form:hover {
+    border: rgba(103, 58, 183, 0.23) solid;
+}
