@@ -86,6 +86,7 @@ export class FirebaseDataService {
    stocks.forEach((stock) => {
      let store = +stock.store;
      let storeCity = stock.address;
+     if (!storeCity) { storeCity = ''; }
      let wineID = +wine.$key;
      let stockCount = +stock.stock;
      let name = wine.name;

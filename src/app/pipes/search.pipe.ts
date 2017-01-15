@@ -15,7 +15,9 @@ export class SearchPipe implements PipeTransform {
     if (args[0] == null) {
       return items;
     }
+    
     return items.filter((item) => {
+      if (!item.city) { item.city = '' }
      return item.$key.indexOf(args) !== -1 || item.city.toLowerCase().indexOf(args.toLowerCase()) !== -1 
     });
   }
